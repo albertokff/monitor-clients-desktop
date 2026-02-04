@@ -13,7 +13,10 @@ class NativeAppServiceProvider implements ProvidesPhpIni
      */
     public function boot(): void
     {
-        Window::open();
+        Window::open()
+            ->width(1024)
+            ->height(768)
+            ->title('HGV - Monitor de Clientes v1.0');
     }
 
     /**
