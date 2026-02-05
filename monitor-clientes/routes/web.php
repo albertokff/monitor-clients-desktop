@@ -8,3 +8,5 @@ Route::get('/', function () {
 });
 
 Route::get('/', [ClienteController::class, 'index']);
+Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
+Route::delete('/clientes/{cliente}', [ClienteController::class, 'destroy'])->name('clientes.destroy');

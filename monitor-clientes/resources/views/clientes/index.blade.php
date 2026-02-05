@@ -8,6 +8,28 @@
 </head>
 <body class="bg-gray-100 p-8">
     <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
+        <h1 class="text-2xl font-bold mb-6 text-gray-800">Monitor de Clientes - HGV</h1>
+
+        <form action="{{ route('clientes.store') }}" method="POST" class="mb-8 flex gap-4 items-end bg-gray-50 p-4 rounded border">
+            @csrf
+            <div class="flex-1">
+                <label class="block text-sm font-medium text-gray-700">Nome do Cliente</label>
+                <input type="text" name="nome" required class="mt-1 block w-full border rounded-md p-2 outline-blue-500">
+            </div>
+            <div class="flex-1">
+                <label class="block text-sm font-medium text-gray-700">E-mail</label>
+                <input type="email" name="email" class="mt-1 block w-full border rounded-md p-2 outline-blue-500">
+            </div>
+            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition">
+                Adicionar
+            </button>
+        </form>
+
+        <table class="w-full text-left border-collapse">
+            </table>
+    </div>
+
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
         <h1 class="text-2xl font-bold mb-6 text-gray-800">Lista de Clientes - HGV</h1>
 
         <table class="w-full text-left border-collapse">
@@ -23,12 +45,21 @@
                     <tr class="border-b hover:bg-gray-50">
                         <td class="py-2">{{ $cliente->nome }}</td>
                         <td class="py-2">
-                            <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
-                                {{ $cliente->status }}
-                            </span>
+                            <td class="py-2">
+                                <span class="px-2 py-1 text-xs rounded-full font-semibold 
+                                    {{ $cliente->status === 'Ativo' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700' }}">
+                                    {{ $cliente->status }}
+                                </span>
+                            </td>
                         </td>
                         <td class="py-2">
-                            <button class="text-blue-500 hover:underline">Editar</button>
+                            <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este cliente?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-500 hover:text-red-700 font-medium">
+                                    Excluir
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @empty
