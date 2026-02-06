@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitor de Clientes</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 p-8">
-    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
+@extends('layouts.app')
+
+@section('content')
+    <div class="bg-white shadow-md rounded-lg p-6">
         <h1 class="text-2xl font-bold mb-6 text-gray-800">Monitor de Clientes - HGV</h1>
 
         <form action="{{ route('clientes.store') }}" method="POST" class="mb-8 flex gap-4 items-end bg-gray-50 p-4 rounded border">
@@ -81,15 +75,14 @@
             </tbody>
         </table>
     </div>
-</body>
-</html>
 
-<script>
-    let timeout = null;
-    document.querySelector('input[name="search"]').addEventListener('keyup', function() {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-            this.form.submit();
-        }, 500); // Espera 500ms após parar de digitar para não sobrecarregar o banco
-    });
-</script>
+    <script>
+        let timeout = null;
+        document.querySelector('input[name="search"]').addEventListener('keyup', function() {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                this.form.submit();
+            }, 500); // Espera 500ms após parar de digitar para não sobrecarregar o banco
+        });
+    </script>
+@endsection
