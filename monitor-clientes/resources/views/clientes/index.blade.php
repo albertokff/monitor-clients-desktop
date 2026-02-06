@@ -29,6 +29,17 @@
             </table>
     </div>
 
+    <div class="mb-4 mt-4 p-6">
+        <form action="{{ route('clientes.index') }}" method="GET" class="flex gap-2">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Pesquisar por nome ou e-mail..." class="flex-1 border rounded-md p-2 outline-blue-500">
+            @if(request('search'))
+                <a href="{{ route('clientes.index') }}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 flex items-center">
+                    Limpar
+                </a>
+            @endif
+        </form>
+    </div>
+
     <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
         <h1 class="text-2xl font-bold mb-6 text-gray-800">Lista de Clientes - HGV</h1>
 
@@ -64,7 +75,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3" class="py-4 text -center text-gray-500">Nenhum cliente cadastrado ainda.</td>
+                        <td colspan="3" class="py-4 text-center text-gray-500">Nenhum cliente cadastrado ainda.</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -72,3 +83,13 @@
     </div>
 </body>
 </html>
+
+<script>
+    let timeout = null;
+    document.querySelector('input[name="search"]').addEventListener('keyup', function() {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            this.form.submit();
+        }, 500); // Espera 500ms após parar de digitar para não sobrecarregar o banco
+    });
+</script>

@@ -8,9 +8,18 @@ use Native\Laravel\Facades\Notification;
 
 class ClienteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $clientes = Cliente::all();
+        $query = Cliente::query();
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where('nome', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+        }
+
+        $clientes = $query->latest()->get();
+
         return view('clientes.index', compact('clientes'));
     }
 
